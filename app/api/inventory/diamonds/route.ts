@@ -96,11 +96,38 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const cacheKey = `diamonds:search:${hashParams(effectiveParams as unknown as Record<string, unknown>)}`;
 
   try {
-    const result = await cacheAside<DiamondSearchResult>(
-      cacheKey,
-      CACHE_TTL.DIAMOND_SEARCH,
-      () => queryDiamonds(effectiveParams)
-    );
+    let result: DiamondSearchResult;
+
+    try {
+      result = await cacheAside<DiamondSearchResult>(
+        cacheKey,
+        CACHE_TTL.DIAMOND_SEARCH,
+        () => queryDiamonds(effectiveParams)
+      );
+    } catch {
+      // Fallback to dummy data when DB is unavailable
+      const { searchDummyDiamonds } = await import("@/lib/dummyDiamonds");
+      const ep = effectiveParams;
+      const dummyResult = searchDummyDiamonds({
+        shapes: ep.shape ? toArray(ep.shape) : undefined,
+        colors: ep.color ? toArray(ep.color) : undefined,
+        clarities: ep.clarity ? toArray(ep.clarity) : undefined,
+        cutGrades: ep.cutGrade ? toArray(ep.cutGrade) : undefined,
+        origins: ep.origin ? toArray(ep.origin) : undefined,
+        minCarat: ep.minCarat,
+        maxCarat: ep.maxCarat,
+        minPrice: ep.minPrice,
+        maxPrice: ep.maxPrice,
+        eyeClean: ep.eyeClean ?? undefined,
+        renewableEnergy: ep.renewableEnergy ?? undefined,
+        carbonCapture: ep.carbonCapture ?? undefined,
+        sortBy: ep.sortBy,
+        sortDir: ep.sortOrder,
+        page: ep.page,
+        limit: ep.pageSize,
+      });
+      result = { ...dummyResult, totalPages: Math.ceil(dummyResult.total / dummyResult.pageSize) };
+    }
 
     return NextResponse.json({ success: true, data: result }, {
       headers: {

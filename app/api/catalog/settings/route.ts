@@ -47,11 +47,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const cacheKey = `settings:list:${hashParams(params as unknown as Record<string, unknown>)}`;
 
   try {
-    const result = await cacheAside(
-      cacheKey,
-      CACHE_TTL.SETTING_LIST,
-      () => querySettings(params)
-    );
+    let result;
+    try {
+      result = await cacheAside(
+        cacheKey,
+        CACHE_TTL.SETTING_LIST,
+        () => querySettings(params)
+      );
+    } catch {
+      // Fallback dummy settings when DB is unavailable
+      const { getDummySettings } = await import("@/lib/dummySettings");
+      result = getDummySettings(params);
+    }
     return NextResponse.json({ success: true, data: result });
   } catch (error) {
     console.error("[GET /api/catalog/settings]", error);
