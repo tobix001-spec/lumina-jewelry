@@ -92,13 +92,13 @@ export default function AdminProductsPage() {
           <h1 className="font-display text-3xl font-semibold text-charcoal tracking-tight">
             Products
           </h1>
-          <button
-            onClick={() => setShowModal(true)}
+          <a
+            href="/admin/products/new"
             className="btn-primary gap-2"
           >
             <Plus size={16} />
             Add Product
-          </button>
+          </a>
         </div>
 
         {/* ── Filters / Search ───────────────────────────────────────────── */}
@@ -206,12 +206,13 @@ export default function AdminProductsPage() {
                   {/* Actions */}
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button
+                      <a
+                        href={`/admin/products/${product.sku}`}
                         className="p-2 rounded hover:bg-cream-dark transition-colors text-charcoal"
                         aria-label={`Edit ${product.name}`}
                       >
                         <Edit size={15} />
-                      </button>
+                      </a>
                       <button
                         className="p-2 rounded hover:bg-red-50 transition-colors text-red-500"
                         aria-label={`Delete ${product.name}`}
