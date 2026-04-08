@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Navigation/Header";
 import { Footer } from "@/components/Navigation/Footer";
 import { Providers } from "@/components/Providers";
+import { LuxuryEffects } from "@/components/motion/LuxuryEffects";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{ fontFamily: "var(--font-inter, Inter, sans-serif)" }}
       >
         <Providers>
+          <LuxuryEffects />
           <Header />
           <div className="min-h-screen">{children}</div>
           <Footer />

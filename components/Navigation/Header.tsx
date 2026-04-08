@@ -120,14 +120,24 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   }, [open]);
 
   return (
-    <>
-      <div
-        className={cn("fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300", open ? "opacity-100" : "opacity-0 pointer-events-none")}
+    <AnimatePresence>
+      {open && (
+      <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-40 lg:hidden"
         onClick={onClose}
         aria-hidden="true"
       />
-      <div
-        className={cn("fixed inset-y-0 left-0 w-[85vw] max-w-sm bg-cream z-50 flex flex-col lg:hidden transition-transform duration-400 shadow-luxury-xl", open ? "translate-x-0" : "-translate-x-full")}
+      <motion.div
+        initial={{ x: "-100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        className="fixed inset-y-0 left-0 w-[85vw] max-w-sm bg-cream z-50 flex flex-col lg:hidden shadow-luxury-xl"
         role="dialog" aria-modal="true"
       >
         {/* Header */}
@@ -188,8 +198,10 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             </Link>
           ))}
         </div>
-      </div>
-    </>
+      </motion.div>
+      </>
+      )}
+    </AnimatePresence>
   );
 }
 

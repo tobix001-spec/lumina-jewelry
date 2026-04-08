@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ConfiguratorClient } from "@/components/configurator/ConfiguratorClient";
 import type { ConfiguratorEntry } from "@/store/useRingBuilderStore";
+import { AnimatedConfiguratorHeader } from "@/components/configurator/AnimatedConfiguratorHeader";
 
 export const metadata: Metadata = {
   title: "Design Your Own Engagement Ring",
@@ -30,36 +31,13 @@ export default function ConfigurePage({
   searchParams: Record<string, string>;
 }) {
   const entry = (searchParams.entry ?? "START_WITH_DIAMOND") as ConfiguratorEntry;
-  const entryLabel = ENTRY_LABELS[entry] ?? ENTRY_LABELS.START_WITH_DIAMOND;
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-8 py-8">
-      {/* Entry point selector tabs */}
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl text-stone-900 mb-4">Design Your Own Ring</h1>
-        <div
-          className="flex flex-wrap gap-2"
-          role="tablist"
-          aria-label="Configurator entry point"
-        >
-          {Object.entries(ENTRY_LABELS).map(([key, label]) => (
-            <a
-              key={key}
-              href={`/configure?entry=${key}`}
-              role="tab"
-              aria-selected={entry === key}
-              className={[
-                "px-4 py-2 rounded-xl text-sm font-medium border transition-all",
-                entry === key
-                  ? "bg-stone-900 text-white border-stone-900"
-                  : "bg-white text-stone-600 border-stone-200 hover:border-stone-400",
-              ].join(" ")}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </div>
+    <main className="max-w-8xl mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-8">
+      <AnimatedConfiguratorHeader
+        entry={entry}
+        entryLabels={ENTRY_LABELS}
+      />
 
       <Suspense fallback={<ConfiguratorSkeleton />}>
         <ConfiguratorClient entry={entry} />
@@ -70,11 +48,11 @@ export default function ConfigurePage({
 
 function ConfiguratorSkeleton() {
   return (
-    <div className="flex gap-8 animate-pulse">
-      <div className="hidden lg:block w-72 shrink-0 h-screen rounded-2xl bg-stone-100" />
+    <div className="flex gap-8">
+      <div className="hidden lg:block w-72 shrink-0 h-screen shimmer bg-cream" />
       <div className="flex-1 grid grid-cols-2 lg:grid-cols-3 gap-4">
         {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="rounded-2xl bg-stone-100 aspect-square" />
+          <div key={i} className="shimmer bg-cream aspect-square" />
         ))}
       </div>
     </div>

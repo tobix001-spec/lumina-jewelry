@@ -8,6 +8,8 @@ import { DiamondCard } from "./DiamondCard";
 import { DiamondFilterSidebar } from "./DiamondFilterSidebar";
 import type { DiamondFilters, DiamondSearchResult } from "@/types";
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal } from "@/components/motion";
 
 async function fetchDiamonds(filters: DiamondFilters, page: number): Promise<DiamondSearchResult> {
   const p: Record<string, unknown> = {
@@ -80,7 +82,7 @@ export function DiamondListingClient({ initialFilters }: Props) {
   return (
     <div className="max-w-8xl mx-auto px-5 sm:px-8 lg:px-12 xl:px-16">
       {/* Page header */}
-      <div className="py-10 sm:py-14 border-b border-warm-border">
+      <Reveal className="py-10 sm:py-14 border-b border-warm-border">
         <p className="label-caps text-gold-dark mb-3">Our Inventory</p>
         <h1 className="font-display text-4xl sm:text-5xl text-charcoal mb-6" style={{ fontWeight: 300 }}>
           Certified Diamonds
@@ -105,7 +107,7 @@ export function DiamondListingClient({ initialFilters }: Props) {
             </button>
           ))}
         </div>
-      </div>
+      </Reveal>
 
       <div className="flex gap-10 py-8">
         {/* Desktop sidebar */}
@@ -179,14 +181,27 @@ export function DiamondListingClient({ initialFilters }: Props) {
           </div>
 
           {/* Empty */}
-          {!isLoading && data?.diamonds.length === 0 && (
-            <div className="py-24 text-center">
-              <Sparkles className="w-10 h-10 text-warm-border mx-auto mb-4" />
-              <p className="font-display text-2xl text-charcoal mb-2" style={{ fontWeight: 400 }}>No Diamonds Found</p>
-              <p className="text-warm-gray text-sm mb-6">Try adjusting or clearing your filters.</p>
-              <button onClick={clear} className="btn-primary">Clear All Filters</button>
-            </div>
-          )}
+          <AnimatePresence>
+            {!isLoading && data?.diamonds.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="py-24 text-center"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Sparkles className="w-10 h-10 text-warm-border mx-auto mb-4" />
+                </motion.div>
+                <p className="font-display text-2xl text-charcoal mb-2" style={{ fontWeight: 400 }}>No Diamonds Found</p>
+                <p className="text-warm-gray text-sm mb-6">Try adjusting or clearing your filters.</p>
+                <button onClick={clear} className="btn-primary">Clear All Filters</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Pagination */}
           {data && data.totalPages > 1 && (
@@ -230,10 +245,25 @@ export function DiamondListingClient({ initialFilters }: Props) {
       </div>
 
       {/* Mobile filter drawer */}
+      <AnimatePresence>
       {drawerOpen && (
         <>
-          <div className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setDrawer(false)} aria-hidden />
-          <div className="fixed inset-y-0 left-0 w-80 bg-white z-50 overflow-y-auto shadow-luxury-xl lg:hidden animate-slide-left">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => setDrawer(false)}
+            aria-hidden
+          />
+          <motion.div
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-y-0 left-0 w-80 bg-white z-50 overflow-y-auto shadow-luxury-xl lg:hidden"
+          >
             <div className="flex items-center justify-between px-5 py-4 border-b border-warm-border sticky top-0 bg-white z-10">
               <p className="font-semibold text-charcoal text-sm">Filters</p>
               <button onClick={() => setDrawer(false)} aria-label="Close">
@@ -248,9 +278,10 @@ export function DiamondListingClient({ initialFilters }: Props) {
                 View {data?.total?.toLocaleString() ?? "…"} Diamonds
               </button>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
+      </AnimatePresence>
     </div>
   );
 }
