@@ -9,10 +9,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/motion";
 
 const COLS = [
-  { id: "anniversary", label: "20th Anniversary",      sub: "Celebrating our founding mission",      href: "/collections/anniversary", img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=900&q=85&auto=format&fit=crop", alt: "Anniversary collection" },
-  { id: "jane-goodall", label: "Jane Goodall",          sub: "In partnership with the JGI",           href: "/collections/jane-goodall", img: "https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=900&q=85&auto=format&fit=crop", alt: "Jane Goodall collection" },
-  { id: "signature",   label: "Signature Collection",  sub: "Our most iconic timeless designs",      href: "/collections/signature",   img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=85&auto=format&fit=crop", alt: "Signature collection" },
-  { id: "pacific-green", label: "Pacific Green",        sub: "Ethically-sourced Colombian emeralds",  href: "/collections/pacific-green", img: "https://images.unsplash.com/photo-1573408301185-9519f94fce70?w=900&q=85&auto=format&fit=crop", alt: "Pacific Green collection" },
+  { id: "anniversary", label: "20th Anniversary",      sub: "Celebrating our founding mission",      href: "/collections/anniversary", img: "/generated/col-anniversary.jpg", alt: "Anniversary collection" },
+  { id: "jane-goodall", label: "Jane Goodall",          sub: "In partnership with the JGI",           href: "/collections/jane-goodall", img: "/generated/col-nature.jpg", alt: "Jane Goodall collection" },
+  { id: "signature",   label: "Signature Collection",  sub: "Our most iconic timeless designs",      href: "/collections/signature",   img: "/generated/col-signature.jpg", alt: "Signature collection" },
+  { id: "pacific-green", label: "Pacific Green",        sub: "Ethically-sourced Colombian emeralds",  href: "/collections/pacific-green", img: "/generated/col-pacific.jpg", alt: "Pacific Green collection" },
 ];
 
 export function CollectionsCarousel() {

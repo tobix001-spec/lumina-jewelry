@@ -50,11 +50,11 @@ export function AnimatedDesignCTA() {
 // ─── Animated Category Grid ──────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { label: "Engagement Rings", href: "/engagement-rings",            img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=85&auto=format&fit=crop", alt: "Diamond engagement ring" },
-  { label: "Wedding Rings",    href: "/wedding-rings",               img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=700&q=85&auto=format&fit=crop", alt: "Wedding bands" },
-  { label: "Fine Jewelry",     href: "/jewelry",                     img: "https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=700&q=85&auto=format&fit=crop", alt: "Diamond necklace" },
-  { label: "Lab Diamonds",     href: "/diamonds?origin=LAB_GROWN",   img: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=85&auto=format&fit=crop", alt: "Lab grown diamond" },
-  { label: "Best Sellers",     href: "/jewelry?collection=best-sellers", img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=700&q=85&auto=format&fit=crop", alt: "Best sellers" },
+  { label: "Engagement Rings", href: "/engagement-rings",            img: "/generated/cat-engagement.jpg", alt: "Diamond engagement ring" },
+  { label: "Wedding Rings",    href: "/wedding-rings",               img: "/generated/cat-wedding.jpg", alt: "Wedding bands" },
+  { label: "Fine Jewelry",     href: "/jewelry",                     img: "/generated/cat-fine-jewelry.jpg", alt: "Diamond necklace" },
+  { label: "Lab Diamonds",     href: "/diamonds?origin=LAB_GROWN",   img: "/generated/cat-lab-diamonds.jpg", alt: "Lab grown diamond" },
+  { label: "Best Sellers",     href: "/jewelry?collection=best-sellers", img: "/generated/cat-best-sellers.jpg", alt: "Best sellers" },
 ];
 
 export function AnimatedCategoryGrid() {
@@ -110,10 +110,10 @@ export function AnimatedCategoryGrid() {
 // ─── Animated Collections ────────────────────────────────────────────────────
 
 const COLLECTIONS = [
-  { label: "Solitaire", sub: "Timeless simplicity", href: "/engagement-rings?style=SOLITAIRE",      img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=600&q=85&auto=format&fit=crop", alt: "Solitaire ring" },
-  { label: "Hidden Halo", sub: "Secret sparkle", href: "/engagement-rings?style=HIDDEN_HALO",        img: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=85&auto=format&fit=crop", alt: "Hidden halo ring" },
-  { label: "Nature-Inspired", sub: "Organic beauty", href: "/engagement-rings?style=NATURE_INSPIRED", img: "https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=600&q=85&auto=format&fit=crop", alt: "Nature inspired ring" },
-  { label: "Ready to Ship", sub: "In 7–10 days", href: "/engagement-rings?collection=ready-to-ship", img: "https://images.unsplash.com/photo-1548691717-5e48df8d44db?w=600&q=85&auto=format&fit=crop", alt: "Ready to ship rings" },
+  { label: "Solitaire", sub: "Timeless simplicity", href: "/engagement-rings?style=SOLITAIRE",      img: "/generated/style-solitaire.jpg", alt: "Solitaire ring" },
+  { label: "Hidden Halo", sub: "Secret sparkle", href: "/engagement-rings?style=HIDDEN_HALO",        img: "/generated/style-hidden-halo.jpg", alt: "Hidden halo ring" },
+  { label: "Nature-Inspired", sub: "Organic beauty", href: "/engagement-rings?style=NATURE_INSPIRED", img: "/generated/style-nature.jpg", alt: "Nature inspired ring" },
+  { label: "Ready to Ship", sub: "In 7–10 days", href: "/engagement-rings?collection=ready-to-ship", img: "/generated/style-ready.jpg", alt: "Ready to ship rings" },
 ];
 
 export function AnimatedFeaturedCollections() {
@@ -167,9 +167,9 @@ export function AnimatedFeaturedCollections() {
 // ─── Animated Trend Report ───────────────────────────────────────────────────
 
 const TRENDS = [
-  { label: "Fine Jewelry", href: "/blog/fine-jewelry-trends-2026",         img: "https://images.unsplash.com/photo-1583292650898-7d22cd27ca6f?w=900&q=85&auto=format&fit=crop", alt: "Fine jewelry editorial" },
-  { label: "Engagement Rings", href: "/blog/engagement-ring-trends-2026",  img: "https://images.unsplash.com/photo-1589394942756-28de60a7dd5c?w=900&q=85&auto=format&fit=crop", alt: "Engagement ring trends" },
-  { label: "Wedding Bands", href: "/blog/wedding-band-trends-2026",        img: "https://images.unsplash.com/photo-1565098772267-60af42b81ef2?w=900&q=85&auto=format&fit=crop", alt: "Wedding band trends" },
+  { label: "Fine Jewelry", href: "/blog/fine-jewelry-trends-2026",         img: "/generated/trend-fine-jewelry.jpg", alt: "Fine jewelry editorial" },
+  { label: "Engagement Rings", href: "/blog/engagement-ring-trends-2026",  img: "/generated/trend-engagement.jpg", alt: "Engagement ring trends" },
+  { label: "Wedding Bands", href: "/blog/wedding-band-trends-2026",        img: "/generated/trend-wedding.jpg", alt: "Wedding band trends" },
 ];
 
 export function AnimatedTrendReport() {
@@ -269,7 +269,7 @@ export function AnimatedOmnichannelSection() {
             <div className="relative">
               <div className="overflow-hidden" style={{ aspectRatio: "4/5" }}>
                 <Image
-                  src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?w=900&q=90&auto=format&fit=crop"
+                  src="/generated/showroom.jpg"
                   alt="Consultant showing an engagement ring to a couple"
                   fill
                   sizes="(max-width:1024px) 100vw,50vw"
@@ -345,7 +345,7 @@ export function AnimatedMission() {
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1600&q=60&auto=format&fit=crop"
+                src="/generated/mission.jpg"
                 alt=""
                 fill
                 className="object-cover opacity-15"

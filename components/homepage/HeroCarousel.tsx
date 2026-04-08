@@ -16,8 +16,8 @@ import {
 const SLIDES = [
   {
     id: "s1",
-    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1800&q=90&auto=format&fit=crop",
-    imageMobile: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=85&auto=format&fit=crop",
+    image: "/generated/hero-1.jpg",
+    imageMobile: "/generated/hero-1.jpg",
     eyebrow: "New Spring Collection",
     headline: "Where Love\nBecomes\nEternal",
     sub: "150,000+ certified natural & lab-grown diamonds, ethically sourced and hand-set.",
@@ -28,8 +28,8 @@ const SLIDES = [
   },
   {
     id: "s2",
-    image: "https://images.unsplash.com/photo-1573408301185-9519f94fce70?w=1800&q=90&auto=format&fit=crop",
-    imageMobile: "https://images.unsplash.com/photo-1573408301185-9519f94fce70?w=900&q=85&auto=format&fit=crop",
+    image: "/generated/hero-2.jpg",
+    imageMobile: "/generated/hero-2.jpg",
     eyebrow: "Lab-Grown Diamonds",
     headline: "Real Diamonds.\nBetter Planet.",
     sub: "Physically identical to mined diamonds. 100% renewable energy certified.",
@@ -40,8 +40,8 @@ const SLIDES = [
   },
   {
     id: "s3",
-    image: "https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=1800&q=90&auto=format&fit=crop",
-    imageMobile: "https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=900&q=85&auto=format&fit=crop",
+    image: "/generated/hero-3.jpg",
+    imageMobile: "/generated/hero-3.jpg",
     eyebrow: "Nature-Inspired",
     headline: "Crafted From\nNature,\nFor Always.",
     sub: "Organic forms, ethically sourced gemstones, and handcrafted 18K gold settings.",

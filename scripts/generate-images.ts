@@ -145,7 +145,7 @@ const IMAGES: { name: string; prompt: string; width: number; height: number }[] 
 // ─── Gemini Imagen API ───────────────────────────────────────────────────────
 
 async function generateImage(prompt: string, name: string): Promise<void> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${API_KEY}`;
 
   const body = JSON.stringify({
     instances: [{ prompt }],
@@ -199,7 +199,7 @@ async function generateImage(prompt: string, name: string): Promise<void> {
 }
 
 async function generateWithGeminiFlash(prompt: string, name: string): Promise<void> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${API_KEY}`;
 
   const body = JSON.stringify({
     contents: [{
