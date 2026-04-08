@@ -62,16 +62,18 @@ export function DiamondShapesCarousel() {
                 aria-label={`Shop ${label} diamonds`}
               >
                 <motion.div
-                  className="relative w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] rounded-full bg-cream border border-warm-border group-hover:border-gold group-hover:shadow-gold overflow-hidden transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
+                  className="relative w-[72px] h-[72px] sm:w-[84px] sm:h-[84px]"
+                  whileHover={{ scale: 1.12, y: -6 }}
                   transition={{ type: "spring", stiffness: 300, damping: 18 }}
                 >
+                  {/* Soft shadow underneath for 3D depth */}
+                  <div className="absolute inset-x-2 -bottom-1.5 h-4 bg-charcoal/8 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <Image
                     src={img}
                     alt={`${label} cut diamond`}
                     width={168}
                     height={168}
-                    className="object-contain w-full h-full p-2.5 sm:p-3 opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                    className="relative object-contain w-full h-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.08)] group-hover:drop-shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition-all duration-300"
                   />
                 </motion.div>
                 <span className="text-xs text-warm-gray font-medium text-center group-hover:text-charcoal transition-colors leading-tight">
