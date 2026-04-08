@@ -1,0 +1,352 @@
+// Lumina Jewelry — Prisma Schema
+// PostgreSQL 14+ with full relational integrity
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Auth & Users ────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?
+  firstName    String?
+  lastName     String?
+  phoneNumber  String?
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  orders       Order[]
+  wishlist     WishlistItem[]
+  reviews      Review[]
+  appointments Appointment[]
+
+  @@index([email])
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+  CONSULTANT
+}
+
+// ─── Catalog: Settings (Ring Mountings) ──────────────────────────────────────
+
+model Setting {
+  id            String         @id @default(cuid())
+  sku           String         @unique
+  name          String
+  description   String?
+  metalType     MetalType
+  basePrice     Float
+  imageUrl      String?
+  galleryUrls   String[]       // Additional product images
+  style         SettingStyle
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  allowedShapes SettingShape[]
+  orderItems    OrderItem[]
+
+  @@index([metalType])
+  @@index([style])
+  @@index([isActive])
+}
+
+enum MetalType {
+  EIGHTEEN_K_YELLOW_GOLD
+  EIGHTEEN_K_WHITE_GOLD
+  FOURTEEN_K_YELLOW_GOLD
+  FOURTEEN_K_WHITE_GOLD
+  ROSE_GOLD
+  PLATINUM
+  TUNGSTEN
+  TANTALUM
+  METEORITE
+}
+
+enum SettingStyle {
+  SOLITAIRE
+  HALO
+  HIDDEN_HALO
+  THREE_STONE
+  BEZEL
+  PAVE
+  CHANNEL
+  VINTAGE
+  NATURE_INSPIRED
+}
+
+model SettingShape {
+  id           String       @id @default(cuid())
+  settingId    String
+  allowedShape DiamondShape
+
+  setting      Setting      @relation(fields: [settingId], references: [id], onDelete: Cascade)
+
+  @@unique([settingId, allowedShape])
+  @@index([settingId])
+}
+
+enum DiamondShape {
+  ROUND
+  OVAL
+  EMERALD
+  MARQUISE
+  RADIANT
+  PEAR
+  ELONGATED_CUSHION
+  CUSHION
+  PRINCESS
+  ASSCHER
+  HEART
+  ANTIQUE_CUSHION
+}
+
+// ─── Catalog: Diamonds (Virtual Inventory) ───────────────────────────────────
+
+model Diamond {
+  id              String        @id @default(cuid())
+  supplierStockId String        @unique   // RapNet / supplier SKU
+  shape           DiamondShape
+  caratWeight     Float
+  color           String        // D-Z scale
+  clarity         String        // FL | IF | VVS1 | VVS2 | VS1 | VS2 | SI1 | SI2 | I1 | I2 | I3
+  cutGrade        String        // Excellent | Very Good | Good | Fair | Poor
+  price           Float         // Customer-facing price (markup applied upstream)
+  origin          DiamondOrigin
+
+  // Advanced grading metrics
+  polish          String?
+  symmetry        String?
+  tablePercent    Float?
+  depthPercent    Float?
+  culetSize       String?
+  fluorescence    String?       // None | Faint | Medium | Strong
+  eyeClean        Boolean?
+  bgmStatus       String?       // Brown | Green | Milky flags
+  lwRatio         Float?        // Length-to-width ratio (non-round)
+
+  // Certification / Lab grading
+  certificationLab String?      // GIA | IGI | GCAL | AGS
+  certificateNo    String?
+  certificateUrl   String?
+
+  // Media
+  imageUrl         String?
+  videoUrl         String?
+  v360Url          String?      // 360° interactive viewer URL
+
+  // Ethical & sustainability attributes
+  blockchainId     String?      // Tracr provenance ID
+  renewableEnergy  Boolean      @default(false)
+  carbonCapture    Boolean      @default(false)
+  metadata         Json?        // Flexible JSONB for provider-specific fields
+
+  // Operational
+  lastSyncedAt     DateTime     @default(now())
+  isAvailable      Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  orderItems       OrderItem[]
+
+  @@index([shape])
+  @@index([caratWeight])
+  @@index([color])
+  @@index([clarity])
+  @@index([origin])
+  @@index([price])
+  @@index([isAvailable])
+  @@index([supplierStockId])
+  // Composite for common filter combos
+  @@index([shape, caratWeight, color, clarity, origin])
+}
+
+enum DiamondOrigin {
+  NATURAL
+  LAB_GROWN
+  COLORED
+  LAB_GROWN_COLORED
+}
+
+// ─── Orders & Transactions ───────────────────────────────────────────────────
+
+model Order {
+  id              String        @id @default(cuid())
+  userId          String
+  orderNumber     String        @unique
+  status          OrderStatus
+  subtotalPrice   Float
+  tax             Float?
+  shippingCost    Float?
+  totalPrice      Float
+  shippingAddress Json?         // Structured address object
+  billingAddress  Json?
+  paymentMethod   String?       // stripe | adyen
+  paymentIntentId String?       // External PSP reference
+  paymentStatus   PaymentStatus
+  notes           String?
+  giftMessage     String?
+  rushShipping    Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  completedAt     DateTime?
+
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items           OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  CHARGED
+  FAILED
+  REFUNDED
+}
+
+model OrderItem {
+  id               String   @id @default(cuid())
+  orderId          String
+  settingId        String
+  diamondId        String
+  ringSize         String
+
+  // Prices frozen at purchase time (immutable audit record)
+  diamondPrice     Float
+  settingPrice     Float
+  customizationFee Float?
+  totalItemPrice   Float
+
+  engraving        String?
+  engraveLocation  String?
+
+  order            Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  setting          Setting  @relation(fields: [settingId], references: [id])
+  diamond          Diamond  @relation(fields: [diamondId], references: [id])
+
+  @@index([orderId])
+  @@index([diamondId])
+  @@index([settingId])
+}
+
+// ─── Wishlist ────────────────────────────────────────────────────────────────
+
+model WishlistItem {
+  id            String   @id @default(cuid())
+  userId        String
+  diamondId     String?
+  settingId     String?
+  configuration Json?    // Full saved configurator snapshot
+  createdAt     DateTime @default(now())
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ─── Reviews ─────────────────────────────────────────────────────────────────
+
+model Review {
+  id               String   @id @default(cuid())
+  userId           String
+  productType      String   // "setting" | "diamond" | "jewelry"
+  productId        String
+  rating           Int      // 1–5
+  title            String?
+  content          String
+  verifiedPurchase Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([productType, productId])
+}
+
+// ─── Omnichannel: Appointments ────────────────────────────────────────────────
+
+model Appointment {
+  id             String            @id @default(cuid())
+  userId         String
+  type           AppointmentType
+  storeLocation  String?
+  scheduledDate  DateTime
+  duration       Int               // Minutes
+  notes          String?
+  consultantId   String?
+  status         AppointmentStatus @default(SCHEDULED)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([scheduledDate])
+  @@index([status])
+}
+
+enum AppointmentType {
+  VIRTUAL
+  IN_PERSON
+  PHONE
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
+}
+
+// ─── Jewelry (non-ring catalog) ───────────────────────────────────────────────
+
+model JewelryProduct {
+  id          String           @id @default(cuid())
+  sku         String           @unique
+  name        String
+  description String?
+  category    JewelryCategory
+  price       Float
+  imageUrl    String?
+  galleryUrls String[]
+  metalType   MetalType?
+  isActive    Boolean          @default(true)
+  isBestSeller Boolean         @default(false)
+  isNewArrival Boolean         @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([category])
+  @@index([isActive])
+}
+
+enum JewelryCategory {
+  EARRINGS
+  NECKLACES
+  RINGS
+  BRACELETS
+}
