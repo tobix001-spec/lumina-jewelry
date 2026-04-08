@@ -21,7 +21,6 @@ const ENTRY_LABELS: Record<ConfiguratorEntry, string> = {
   START_WITH_DIAMOND: "Start with a Diamond",
   START_WITH_SETTING: "Start with a Setting",
   START_WITH_LAB_DIAMOND: "Start with a Lab Diamond",
-  START_WITH_GEMSTONE: "Start with a Gemstone",
   START_WITH_BRIDAL_SET: "Start with a Bridal Set",
 };
 

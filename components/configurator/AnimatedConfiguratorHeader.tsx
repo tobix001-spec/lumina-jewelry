@@ -4,13 +4,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/motion";
 import type { ConfiguratorEntry } from "@/store/useRingBuilderStore";
-import { Sparkles, Diamond, Gem, Heart, Layers } from "lucide-react";
+import { Sparkles, Diamond, Heart, Layers } from "lucide-react";
 
 const ENTRY_ICONS: Record<string, React.ElementType> = {
   START_WITH_DIAMOND: Diamond,
   START_WITH_SETTING: Layers,
   START_WITH_LAB_DIAMOND: Sparkles,
-  START_WITH_GEMSTONE: Gem,
   START_WITH_BRIDAL_SET: Heart,
 };
 

@@ -12,7 +12,6 @@ const CTA_ENTRIES = [
   { label: "Start with a Setting", href: "/configure?entry=START_WITH_SETTING", sub: "Choose the ring first" },
   { label: "Start with a Diamond", href: "/configure?entry=START_WITH_DIAMOND", sub: "Pick your stone first" },
   { label: "Start with a Lab Diamond", href: "/configure?entry=START_WITH_LAB_DIAMOND", sub: "Eco-conscious choice" },
-  { label: "Start with a Gemstone", href: "/configure?entry=START_WITH_GEMSTONE", sub: "Color and brilliance" },
 ];
 
 export function AnimatedDesignCTA() {
@@ -24,7 +23,7 @@ export function AnimatedDesignCTA() {
           <TextReveal text="Where Would You Like to Begin?" />
         </h2>
       </Reveal>
-      <StaggerContainer className="container-luxury grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <StaggerContainer className="container-luxury grid grid-cols-3 gap-3">
         {CTA_ENTRIES.map((e) => (
           <StaggerItem key={e.href}>
             <Link
@@ -53,7 +52,6 @@ export function AnimatedDesignCTA() {
 const CATEGORIES = [
   { label: "Engagement Rings", href: "/engagement-rings",            img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=85&auto=format&fit=crop", alt: "Diamond engagement ring" },
   { label: "Wedding Rings",    href: "/wedding-rings",               img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=700&q=85&auto=format&fit=crop", alt: "Wedding bands" },
-  { label: "Gemstone Rings",   href: "/gemstones",                   img: "https://images.unsplash.com/photo-1573408301185-9519f94fce70?w=700&q=85&auto=format&fit=crop", alt: "Sapphire ring" },
   { label: "Fine Jewelry",     href: "/jewelry",                     img: "https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=700&q=85&auto=format&fit=crop", alt: "Diamond necklace" },
   { label: "Lab Diamonds",     href: "/diamonds?origin=LAB_GROWN",   img: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=85&auto=format&fit=crop", alt: "Lab grown diamond" },
   { label: "Best Sellers",     href: "/jewelry?collection=best-sellers", img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=700&q=85&auto=format&fit=crop", alt: "Best sellers" },
@@ -67,7 +65,7 @@ export function AnimatedCategoryGrid() {
           <p className="label-caps text-gold-dark mb-3">The Collection</p>
           <h2 className="font-display text-4xl sm:text-5xl text-charcoal" style={{ fontWeight: 300 }}>Shop by Category</h2>
         </Reveal>
-        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {CATEGORIES.map((cat) => (
             <StaggerItem key={cat.label}>
               <Link

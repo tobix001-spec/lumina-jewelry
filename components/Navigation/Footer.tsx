@@ -58,7 +58,6 @@ const COLS = [
     { label: "Engagement Ring Guide",href: "/education/engagement-ring-guide" },
     { label: "Ring Sizing",          href: "/education/ring-sizing" },
     { label: "Metal Guide",          href: "/education/metals" },
-    { label: "Gemstone Guide",       href: "/education/gemstones" },
     { label: "Blog & Trends",        href: "/blog" },
   ]},
 ];

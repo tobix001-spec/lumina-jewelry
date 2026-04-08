@@ -28,7 +28,6 @@ export type ConfiguratorEntry =
   | "START_WITH_SETTING"
   | "START_WITH_DIAMOND"
   | "START_WITH_LAB_DIAMOND"
-  | "START_WITH_GEMSTONE"
   | "START_WITH_BRIDAL_SET";
 
 export type ViewMode = "grid" | "details" | "3d";

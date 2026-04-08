@@ -16,7 +16,6 @@ export const NAV_ITEMS: NavItem[] = [
           { label: "Start with a Setting", href: "/configure?entry=START_WITH_SETTING" },
           { label: "Start with a Diamond", href: "/configure?entry=START_WITH_DIAMOND" },
           { label: "Start with a Lab Diamond", href: "/configure?entry=START_WITH_LAB_DIAMOND" },
-          { label: "Start with a Gemstone", href: "/configure?entry=START_WITH_GEMSTONE" },
           { label: "Start with a Bridal Set", href: "/configure?entry=START_WITH_BRIDAL_SET" },
         ],
       },
@@ -145,47 +144,6 @@ export const NAV_ITEMS: NavItem[] = [
           { label: "Diamond Earrings", href: "/jewelry/earrings?type=diamond" },
           { label: "Diamond Necklaces", href: "/jewelry/necklaces?type=diamond" },
           { label: "Tennis Bracelets", href: "/jewelry/bracelets?type=tennis" },
-        ],
-      },
-    ],
-  },
-
-  {
-    label: "Gemstones",
-    groups: [
-      {
-        heading: "Design Your Own",
-        items: [{ label: "Gemstone Ring Builder", href: "/configure?entry=START_WITH_GEMSTONE" }],
-      },
-      {
-        heading: "Shop by Gemstone",
-        items: [
-          { label: "Sapphire", href: "/gemstones?type=sapphire" },
-          { label: "Emerald", href: "/gemstones?type=emerald" },
-          { label: "Moissanite", href: "/gemstones?type=moissanite" },
-          { label: "Ruby", href: "/gemstones?type=ruby" },
-          { label: "Aquamarine", href: "/gemstones?type=aquamarine" },
-          { label: "Alexandrite", href: "/gemstones?type=alexandrite" },
-          { label: "Morganite", href: "/gemstones?type=morganite" },
-        ],
-      },
-      {
-        heading: "Shop by Color",
-        items: [
-          { label: "Blue", href: "/gemstones?color=blue" },
-          { label: "Green", href: "/gemstones?color=green" },
-          { label: "Pink & Peach", href: "/gemstones?color=pink" },
-          { label: "Purple", href: "/gemstones?color=purple" },
-          { label: "Teal", href: "/gemstones?color=teal" },
-        ],
-      },
-      {
-        heading: "Specialized Collections",
-        items: [
-          { label: "Montana Sapphires", href: "/collections/montana-sapphires", isNew: true },
-          { label: "Moyo Gem", href: "/collections/moyo-gem" },
-          { label: "VirtuGem", href: "/collections/virtugem" },
-          { label: "Rare Gemstones", href: "/gemstones?collection=rare" },
         ],
       },
     ],
